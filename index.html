@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pagos</title>
+    <link rel="stylesheet" href="/estilos.css">
+</head>
+<body>
+    <h1>Control de pagos</h1>
+    <section>
+        <h2>Agregar cliente</h2>
+        <form action="/cliente" method="post">
+            <input name="nombre" placeholder="Nombre del cliente" required>
+            <input name="contacto" placeholder="Teléfono" required>
+            <input name="terreno" placeholder="Terreno" required>
+            <input name="saldo" type="number" min="1" step=".01" placeholder="Saldo" required>
+            <button>Guardar cliente</button>
+        </form>
+        <p><a href="/clientes.txt">Ver clientes guardados</a></p>
+    </section>
+    <section>
+        <h2>Registrar pago</h2>
+        <form action="/pago" method="post">
+            <input name="cliente" placeholder="Nombre del cliente" required>
+            <input name="fecha" type="date" required>
+            <input name="monto" type="number" min=".01" step=".01" placeholder="Monto" required>
+            <input name="folio" placeholder="Folio del recibo" required>
+            <button>Guardar pago</button>
+        </form>
+        <p><a href="/pagos.txt">Ver pagos guardados</a></p>
+    </section>
+</body>
+</html>
