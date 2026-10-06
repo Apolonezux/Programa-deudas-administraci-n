@@ -8,6 +8,7 @@
 static void enviar(SOCKET cliente, const char *tipo, const char *texto)
 {
     // aqui se prepara y envia la respuesta http al cliente incluyendo el tipo de contenido y el texto de respuesta0
+    // es como si el navegador dijera "hey servidor dame algo" y esta funcion dice "que onda, si aqui tienes"
 }
 static void atender(SOCKET cliente)
 {
