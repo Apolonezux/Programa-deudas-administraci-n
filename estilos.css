@@ -1,0 +1,125 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.brand-mark,
+.icon-tile,
+svg,
+.topbar-status,
+.eyebrow,
+.step-label {
+    display: none;
+}
+
+.topbar,
+.welcome,
+.panel-heading,
+.form-footer,
+.page-footer {
+    margin-bottom: 16px;
+}
+
+.panel {
+    margin-bottom: 24px;
+}
+
+.panel-description {
+    margin-bottom: 12px;
+}
+
+.field {
+    margin-bottom: 12px;
+}
+
+.field label,
+.field input {
+    display: block;
+}
+
+.field label {
+    margin-bottom: 4px;
+}
+
+.field input {
+    max-width: 100%;
+}
+
+.field select {
+    display: block;
+    width: 100%;
+    min-height: 32px;
+}
+
+.field small {
+    display: block;
+}
+
+.summary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 28px;
+    margin: 12px 0 24px;
+    padding: 10px 0;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+
+.summary p {
+    margin: 0;
+}
+
+.records {
+    margin-top: 28px;
+}
+
+.record-section {
+    margin-bottom: 28px;
+}
+
+.record-section h2 {
+    margin-bottom: 10px;
+}
+
+.record-section > label,
+.record-section > input {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.record-section > input {
+    width: min(100%, 360px);
+    min-height: 32px;
+}
+
+.table-scroll {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+th,
+td {
+    padding: 7px 10px;
+    border: 1px solid #ccc;
+    white-space: nowrap;
+}
+
+th {
+    background: #f3f3f3;
+}
+
+.balance-credit {
+    font-weight: 700;
+}
+
+#app-status[data-state="error"] {
+    color: #900;
+}
+
+.page-footer nav a {
+    margin-right: 8px;
+}

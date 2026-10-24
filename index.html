@@ -3,32 +3,205 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Pagos</title>
-    <link rel="stylesheet" href="/estilos.css">
+    <meta name="theme-color" content="#f5f7fb">
+    <meta name="description" content="Panel para administrar clientes, saldos y pagos.">
+    <title>Control de pagos | Administración</title>
+    <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
-    <h1>Control de pagos</h1>
-    <section>
-        <h2>Agregar cliente</h2>
-        <form action="/cliente" method="post">
-            <input name="nombre" placeholder="Nombre del cliente" required>
-            <input name="contacto" placeholder="Teléfono" required>
-            <input name="terreno" placeholder="Terreno" required>
-            <input name="saldo" type="number" min="1" step=".01" placeholder="Saldo" required>
-            <button>Guardar cliente</button>
-        </form>
-        <p><a href="/clientes.txt">Ver clientes guardados</a></p>
-    </section>
-    <section>
-        <h2>Registrar pago</h2>
-        <form action="/pago" method="post">
-            <input name="cliente" placeholder="Nombre del cliente" required>
-            <input name="fecha" type="date" required>
-            <input name="monto" type="number" min=".01" step=".01" placeholder="Monto" required>
-            <input name="folio" placeholder="Folio del recibo" required>
-            <button>Guardar pago</button>
-        </form>
-        <p><a href="/pagos.txt">Ver pagos guardados</a></p>
-    </section>
+    <header class="topbar">
+        <a class="brand" href="/" aria-label="Control de pagos, inicio">
+            <span class="brand-mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M4 8.5h16v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-10Z" />
+                    <path d="M4 8.5 6 4h12l2 4.5M4 12h16m-11 4h3" />
+                </svg>
+            </span>
+            <span class="brand-copy">
+                <strong>Control de pagos Don Jaimito Pro </strong>
+                <span>Administración</span>
+            </span>
+        </a>
+        <div class="topbar-status">
+            <span class="status-dot" aria-hidden="true"></span>
+            Panel local
+        </div>
+    </header>
+
+    <main class="page-shell">
+        <section class="welcome" aria-labelledby="page-title">
+            <div>
+                <p class="eyebrow">RESUMEN DE OPERACIONES</p>
+                <h1 id="page-title">Control de pagos</h1>
+                <p class="welcome-copy">Administra clientes y registra sus pagos desde un solo lugar.</p>
+            </div>
+            <span id="app-status" role="status" aria-live="polite">Cargando datos...</span>
+        </section>
+
+        <section class="summary" aria-label="Resumen de saldos">
+            <p>Clientes: <strong id="total-clients">0</strong></p>
+            <p>Saldo pendiente: <strong id="total-balance">$0.00</strong></p>
+            <p>Pagos registrados: <strong id="total-payments">0</strong></p>
+        </section>
+
+        <section class="workflow" aria-label="Administración de clientes y pagos">
+            <article class="panel" aria-labelledby="client-title">
+                <div class="panel-heading">
+                    <span class="icon-tile icon-blue" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <path d="M16 20v-1.5a4.5 4.5 0 0 0-4.5-4.5h-5A4.5 4.5 0 0 0 2 18.5V20m7-10a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm8-5a4 4 0 0 1 0 7.75m1 2.25h.5a4.5 4.5 0 0 1 4.5 4.5V20" />
+                        </svg>
+                    </span>
+                    <div>
+                        <p class="step-label">01 / CLIENTES</p>
+                        <h2 id="client-title">Agregar cliente</h2>
+                    </div>
+                </div>
+                <p class="panel-description">Guarda los datos del cliente y el saldo inicial de su terreno.</p>
+
+                <form action="/cliente" method="post" class="form-grid">
+                    <div class="field field-full">
+                        <label for="nombre">Nombre completo</label>
+                        <input id="nombre" name="nombre" type="text" maxlength="255"
+                               placeholder="Ej. Ana Martínez" autocomplete="name" required>
+                    </div>
+                    <div class="field">
+                        <label for="contacto">Teléfono de contacto</label>
+                        <input id="contacto" name="contacto" type="tel" maxlength="255"
+                               placeholder="Ej. 555 123 4567" autocomplete="tel" required>
+                    </div>
+                    <div class="field">
+                        <label for="terreno">Terreno</label>
+                        <input id="terreno" name="terreno" type="text" maxlength="255"
+                               placeholder="Ej. Lote 12, manzana B" required>
+                    </div>
+                    <div class="field field-full">
+                        <label for="saldo">Saldo inicial</label>
+                        <div class="input-with-prefix">
+                            <span aria-hidden="true">$</span>
+                            <input id="saldo" name="saldo" type="number" min="0.01" step="0.01"
+                                   placeholder="0.00" inputmode="decimal" required>
+                        </div>
+                        <small>Ingresa el saldo pendiente en pesos.</small>
+                    </div>
+                    <div class="field-full form-footer">
+                        <button class="button button-primary" type="submit">
+                            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <path d="M12 5v14m-7-7h14" />
+                            </svg>
+                            Guardar cliente
+                        </button>
+                        <a class="subtle-link" href="/clientes.txt">Consultar clientes</a>
+                    </div>
+                </form>
+            </article>
+
+            <article class="panel" aria-labelledby="payment-title">
+                <div class="panel-heading">
+                    <span class="icon-tile icon-green" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <rect x="3" y="5" width="18" height="14" rx="2" />
+                            <path d="M3 10h18m-13 5h4" />
+                        </svg>
+                    </span>
+                    <div>
+                        <p class="step-label">02 / MOVIMIENTOS</p>
+                        <h2 id="payment-title">Registrar pago</h2>
+                    </div>
+                </div>
+                <p class="panel-description">Captura el pago recibido y conserva el folio del comprobante.</p>
+
+                <form action="/pago" method="post" class="form-grid" id="payment-form">
+                    <div class="field field-full">
+                        <label for="cliente">Nombre del cliente</label>
+                        <select id="cliente" name="cliente" required>
+                            <option value="">Primero registra un cliente</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="fecha">Fecha de pago</label>
+                        <input id="fecha" name="fecha" type="date" required>
+                    </div>
+                    <div class="field">
+                        <label for="monto">Monto recibido</label>
+                        <div class="input-with-prefix">
+                            <span aria-hidden="true">$</span>
+                            <input id="monto" name="monto" type="number" min="0.01" step="0.01"
+                                   placeholder="0.00" inputmode="decimal" required>
+                        </div>
+                    </div>
+                    <div class="field field-full">
+                        <label for="folio">Folio del recibo</label>
+                        <input id="folio" name="folio" type="text" maxlength="255"
+                               placeholder="Ej. REC-000123" required>
+                    </div>
+                    <div class="field-full form-footer">
+                        <button class="button button-secondary" type="submit">
+                            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <path d="M12 3v12m-5-5 5 5 5-5m-12 9h14" />
+                            </svg>
+                            Guardar pago
+                        </button>
+                        <a class="subtle-link" href="/pagos.txt">Consultar pagos</a>
+                    </div>
+                </form>
+            </article>
+        </section>
+
+        <section class="records" aria-label="Registros">
+            <article class="record-section">
+                <h2>Clientes y saldos</h2>
+                <label for="client-filter">Buscar cliente</label>
+                <input id="client-filter" type="search" placeholder="Nombre, teléfono o terreno">
+                <div class="table-scroll">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Cliente</th>
+                                <th>Teléfono</th>
+                                <th>Terreno</th>
+                                <th>Saldo inicial</th>
+                                <th>Pagado</th>
+                                <th>Saldo actual</th>
+                            </tr>
+                        </thead>
+                        <tbody id="clients-table">
+                            <tr><td colspan="6">Cargando clientes...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </article>
+
+            <article class="record-section">
+                <h2>Historial de pagos</h2>
+                <label for="payment-filter">Buscar pago</label>
+                <input id="payment-filter" type="search" placeholder="Cliente o folio">
+                <div class="table-scroll">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Cliente</th>
+                                <th>Monto</th>
+                                <th>Folio</th>
+                            </tr>
+                        </thead>
+                        <tbody id="payments-table">
+                            <tr><td colspan="4">Cargando pagos...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </article>
+        </section>
+
+        <footer class="page-footer">
+            <span>Cuenta Clara <span aria-hidden="true">·</span> Control administrativo</span>
+            <nav aria-label="Registros guardados">
+                <a href="/clientes.txt">Clientes</a>
+                <a href="/pagos.txt">Pagos</a>
+            </nav>
+        </footer>
+    </main>
+    <script src="/app.js" defer></script>
 </body>
 </html>
